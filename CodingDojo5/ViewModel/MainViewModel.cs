@@ -10,14 +10,22 @@ namespace CodingDojo5.ViewModel
     {
         public ObservableCollection<ItemVM> Items { get; set; }
 
+        public ObservableCollection<ItemVM> ShoppingCart { get; set; }
+
         private ItemVM currentItem;
 
-        public ItemVM SelectedItem { get; set; }
+        private ItemVM selectedItem;
 
-        public ObservableCollection<ItemVM> ShoppingCart { get; set; }
         public ItemVM CurrentItem {
             get { return currentItem; }
-            set { currentItem = value; RaisePropertyChanged(); } }
+            set { currentItem = value; RaisePropertyChanged(); }
+            }
+
+        public ItemVM SelectedItem
+        {
+            get { return selectedItem; }
+            set { selectedItem = value; RaisePropertyChanged(); }
+        }
 
         public MainViewModel()
         {
