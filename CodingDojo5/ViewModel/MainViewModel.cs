@@ -1,4 +1,5 @@
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Media.Imaging;
@@ -12,14 +13,17 @@ namespace CodingDojo5.ViewModel
 
         public ObservableCollection<ItemVM> ShoppingCart { get; set; }
 
-        private ItemVM currentItem;
+        //private ItemVM currentItem;
 
         private ItemVM selectedItem;
 
-        public ItemVM CurrentItem {
-            get { return currentItem; }
-            set { currentItem = value; RaisePropertyChanged(); }
-            }
+        private RelayCommand<ItemVM> buyBtnClick;
+
+        //public ItemVM CurrentItem
+        //{
+        //    get { return currentItem; }
+        //    set { currentItem = value; RaisePropertyChanged(); }
+        //}
 
         public ItemVM SelectedItem
         {
@@ -27,18 +31,25 @@ namespace CodingDojo5.ViewModel
             set { selectedItem = value; RaisePropertyChanged(); }
         }
 
+        public RelayCommand<ItemVM> BuyBtnClick
+        {
+            get { return buyBtnClick; }
+            set { buyBtnClick = value; RaisePropertyChanged(); }
+        }
+
         public MainViewModel()
         {
             Items = new ObservableCollection<ItemVM>();
             ShoppingCart = new ObservableCollection<ItemVM>();
 
+            BuyBtnClick = new RelayCommand<ItemVM>(
+                (p) =>
+                {
+                    ShoppingCart.Add(p);
+                    //RaisePropertyChanged();
+                }, (p) => { return true; });
+
             GenerateDemoData();
-        }
-
-
-        public void AddItemToCart()
-        {
-            ShoppingCart.Add(CurrentItem);
         }
 
         private void GenerateDemoData()
